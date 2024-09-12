@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 function Signup() {
   const [UserName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [profilePic, setProfilePic] = useState(null); 
+  const [profilefordb, setProfilefordb] = useState('');
+  const [profilePic, setProfilePic] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setProfilefordb(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePic(reader.result); 
+        setProfilePic(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -26,15 +29,16 @@ function Signup() {
 
     const formData = new FormData();
     formData.append('username', UserName);
+
     formData.append('email', email);
+
     formData.append('password', password);
-    if (profilePic) {
-      formData.append('profilePic', profilePic); 
-    }
-    console.log(formData);
+
+    formData.append('profilePic', profilefordb);
+
     try {
-      // Replace with your actual signup function and endpoint
-      // await signup(formData);
+      const response = await axios.post('http://localhost:3000/signup', formData);
+      console.log(response.data);
       toast.success('Sign up successful!');
     } catch (error) {
       toast.error('Failed to sign up. Please try again.');
@@ -59,7 +63,7 @@ function Signup() {
             )}
             <input
               type="file"
-              accept="image/*"
+              name='profilePic'
               onChange={handleImageUpload}
               className="mb-4"
             />
