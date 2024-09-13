@@ -14,10 +14,11 @@ router.get('/getuser/:userEmail', async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found or invalid credentials' });
         }
+        console.log('user ',user)
         res.status(200).json({
             userName: user.username,
             userEmail: user.email,
-            imageUrl: `http://localhost:3000/profile-picture/${user.fileName}`
+            profileUrl: `http://localhost:3000/profile-picture/${user.profilePic}`
         });
     } catch (error) {
         // Handle any errors

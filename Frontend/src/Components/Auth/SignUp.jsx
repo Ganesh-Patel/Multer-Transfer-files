@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [UserName, setUserName] = useState('');
@@ -10,6 +11,7 @@ function Signup() {
   const [profilefordb, setProfilefordb] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -39,7 +41,9 @@ function Signup() {
     try {
       const response = await axios.post('http://localhost:3000/signup', formData);
       console.log(response.data);
+
       toast.success('Sign up successful!');
+      navigate('/login')
     } catch (error) {
       toast.error('Failed to sign up. Please try again.');
     }
@@ -110,7 +114,7 @@ function Signup() {
           </button>
         </form>
         <p className="mt-4 text-center text-gray-600">
-          Already have an account? <a href="/login" className="text-teal-500 hover:underline">Login</a>
+          Already have an account?<Link to="/login" className="text-teal-500 hover:underline">Login</Link>
         </p>
       </div>
     </div>

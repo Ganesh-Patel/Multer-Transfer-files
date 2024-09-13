@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import {UserContext } from '../Context/UserContext.jsx'
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const {setUser} = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,16 +17,16 @@ function Login() {
     setLoading(true);
 
     try {
-      // Make an axios call to your API endpoint
       const response = await axios.get(`http://localhost:3000/getuser/${email}`, {
-        params: { password }, // Send the password as a query parameter
+        params: { password }, 
       });
 
       const user = response.data;
+      console.log('user',user)
       if (user) {
+        setUser(user);
         toast.success('Login successful!');
-        // Perform any necessary actions, like saving the user data or redirecting
-        navigate('/home'); // Navigate to a dashboard or some other page on success
+        navigate('/home'); 
       } else {
         toast.error('Invalid email or password.');
       }
