@@ -9,7 +9,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const {setUser} = useContext(UserContext);
+  const {setUser,setauthToken} = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -25,6 +25,7 @@ function Login() {
       console.log('user',user)
       if (user) {
         setUser(user);
+        setauthToken(true);
         toast.success('Login successful!');
         navigate('/home'); 
       } else {
@@ -34,7 +35,6 @@ function Login() {
       toast.error('Failed to login. Please try again.');
       console.error('Login error:', error);
     }
-
     setLoading(false);
   };
 

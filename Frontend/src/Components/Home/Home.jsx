@@ -7,7 +7,7 @@ import CryptoJS from 'crypto-js';
 const secretKey = 'mySecretKey'; // Use a more secure key in production
 
 function Home() {
-  const { user, setUser } = useContext(UserContext); // Assuming you have setUser in UserContext to update user
+  const { user, setUser,authToken,setauthToken } = useContext(UserContext); 
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -32,13 +32,14 @@ function Home() {
   const handleLogout = () => {
     localStorage.removeItem('user'); // Clear stored data on logout
     setUser(null); // Clear user context
+    setauthToken(false);
     navigate('/login');
   };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
+  
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navbar */}
