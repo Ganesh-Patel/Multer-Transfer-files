@@ -17,7 +17,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.get(`http://localhost:3000/getuser/${email}`, {
+      const response = await axios.get(`https://multer-transfer-files.onrender.com/getuser/${email}`, {
         params: { password }, 
       });
 

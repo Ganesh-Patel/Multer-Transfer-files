@@ -39,7 +39,7 @@ function Signup() {
     formData.append('profilePic', profilefordb);
 
     try {
-      const response = await axios.post('http://localhost:3000/signup', formData);
+      const response = await axios.post('https://multer-transfer-files.onrender.com/signup', formData);
       console.log(response.data);
 
       toast.success('Sign up successful!');
